@@ -1,0 +1,94 @@
+﻿@page
+@model Contacts.Web.Pages.ContactDetailsModel
+@{
+    ViewData["Title"] = "Contact Details";
+}
+
+<div id="info" class="row" style="padding: 15px 10% 15px 15px; display: none;">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="txtId" class="col-lg-2 control-label">Id</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtId" readonly disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtCompany" class="col-lg-2 control-label">Company</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtCompany" readonly disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtFullName" class="col-lg-2 control-label">Full Name</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtFullName" readonly disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtFirstName" class="col-lg-2 control-label">First Name</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtFirstName" readonly disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtMiddle" class="col-lg-2 control-label">Middle</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtMiddle" readonly disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtLastName" class="col-lg-2 control-label">Last Name</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtLastName" readonly disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtEmail" class="col-lg-2 control-label">Email</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtEmail" readonly disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtDepartment" class="col-lg-2 control-label">Department</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtDepartment" readonly disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtTitle" class="col-lg-2 control-label">Title</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="txtTitle" readonly disabled>
+            </div>
+        </div>
+    </form>
+
+    <a asp-page="/Index" class="btn btn-info" style="float: right;">Back</a>
+</div>
+
+<script>
+    $(document).ready(function() {
+        initialize();
+    });
+
+    function initialize() {
+        $.ajax({
+            type: "GET",
+            url: '/odata/Contact(@Model.ContactId)',
+            success: function (data) {
+                for (var property in data)
+                {
+                    if (!property.includes('odata.context'))
+                        $('#txt' + property).val(data[property]);
+                }
+            },
+            error: function (request, status, error) {
+
+            },
+            complete: function () {
+                $('#info').show();
+            },
+            dataType: "json"
+        });
+    }
+</script>
+

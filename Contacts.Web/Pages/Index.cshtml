@@ -1,0 +1,73 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Contacts";
+}
+
+<div class="row">
+    <strong>*Double click on the record to see the details.</strong>
+    <ejs-grid id="GridContacts"
+              allowFiltering="true"
+              allowPaging="true"
+              allowSelection="true"
+              allowSorting="true"
+              allowTextWrap="true"
+              enableAltRow="true"
+              enablePersistence="true"
+              height="300"
+              rowHeight="25"
+              width="auto"
+              recordDoubleClick="onRecordDoubleClick">
+        <e-data-manager url="@Url.Content("/odata/Contact")"
+                        offline="false"
+                        adaptor="ODataV4Adaptor" />
+        <e-grid-pagesettings pageSize="10" pageCount="5" />
+        <e-grid-filtersettings type="Excel" mode="Immediate" ignoreAccent="true" />
+        <e-grid-columns>
+            <e-grid-column field="Id"
+                           isPrimaryKey="true"
+                           headerText="Id"
+                           textAlign="Left"
+                           type="String"
+                           width="100" />
+            <e-grid-column field="Company"
+                           headerText="Company"
+                           width="250"
+                           type="String" />
+            <e-grid-column field="FullName"
+                           headerText="Full Name"
+                           width="150"
+                           type="String" />
+            <e-grid-column field="FirstName"
+                           headerText="First Name"
+                           width="150"
+                           type="String" />
+            <e-grid-column field="Middle"
+                           headerText="Middle"
+                           width="150"
+                           type="String" />
+            <e-grid-column field="LastName"
+                           headerText="Last Name"
+                           width="150"
+                           type="String" />
+            <e-grid-column field="Email"
+                           headerText="Email"
+                           width="250"
+                           type="String" />
+            <e-grid-column field="Department"
+                           headerText="Department"
+                           width="150"
+                           type="String" />
+            <e-grid-column field="Title"
+                           headerText="Title"
+                           width="250"
+                           type="String" />
+        </e-grid-columns>
+    </ejs-grid>
+</div>
+
+<script>
+    var onRecordDoubleClick = function (args) {
+        window.location.href = '/ContactDetails?id=' + args.rowData.Id;
+    }
+</script>
